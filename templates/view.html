@@ -1,0 +1,33 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>List</title>  
+</head>  
+<body>  
+  
+<h3>Fruits Details</h3>  
+<table border=5>  
+    <thead>  
+        <td>ID</td>  
+        <td>Fruit Name</td>  
+        <td>Quantity</td>  
+        <td>Price</td>  
+    </thead>  
+      
+    {% for row in rows %}  
+      
+        <tr>  
+            <td>{{row["id"]}}</td>  
+            <td>{{row["fruit_name"]}}</td>  
+            <td>{{row["quantity"]}}</td>  
+            <td>{{row["price"]}}</td>  
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br><br>  
+  
+<a href="/">Go back to home page</a>  
+  
+</body>  
+</html>  
