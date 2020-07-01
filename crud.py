@@ -1,38 +1,8 @@
 from flask import *
 from flask_restplus import Api, Resource, fields
 import sqlite3
-from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-# api_app = Api(app = app, 
-#               version = "1.0", 
-#         	  title = "Name Recorder",
-#               description = "Manage names of various users of the application")
-
-# name_space = api_app.namespace('main', description='Main APIs')
-"""
-Template for Swagger
-
-@name_space.route("/")
-
-class MainClass(Resource):
-
-	def get(self):
-
-		return {
-
-			"status": "Got new data"
-
-		}
-
-	def post(self):
-
-		return {
-
-			"status": "Posted new data"
-
-		}
-"""
 
 
 def dict_factory(cursor, row):
@@ -83,6 +53,40 @@ def savedetails():
     # else:
     #     return  page_not_found()
 
+@app.route("/update", methods = ['GET','POST'])
+def update():
+    if request.method == 'POST':
+        model.save()
+    else:
+        return render_template("update.html")
+    # if request.method == 'POST':
+    #     model.save()
+    # else:
+        
+     
+@app.route("/updaterecord",methods = ["GET","POST"])
+def updaterecord():
+    # msg ="Updated"
+    if request.method == 'POST':
+        try:
+            idx = request.form["id"]
+            fruit_name = request.form["fruit_name"]
+            quantity = request.form["quantity"]
+            price = request.form["price"]
+            with sqlite3.connect("fruits.db") as con:
+                cur = con.cursor()
+                cur.execute("UPDATE fruit SET fruit_name = ?, quantity = ?, price =? WHERE id = ?;", (fruit_name,quantity,price,idx))
+                con.commit()
+                msg = "Item Updated"
+        except:
+            con.rollback()
+            msg = "Item cannot be updated"
+        finally:
+            return render_template("updaterecord.html", msg= msg)
+            con.close()
+    else:
+        return page_not_found(404)
+
 @app.route("/view")  
 def view():  
     con = sqlite3.connect("fruits.db")  
@@ -92,32 +96,6 @@ def view():
     rows = cur.fetchall()  
     return render_template("view.html",rows = rows)  
 
-# @app.route("/update", methods = ['GET','POST'])
-# def update():
-#     if request.method == 'POST':
-#         model.save()
-#     else:
-#         return render_template("update.html")
-     
-
-# @app.route("/updaterecord",methods = ["POST"])
-# def updaterecord():
-#     msg = "Enter Data"
-#     id = request.form["id"]
-#     with sqlite3.connect("fruits.db") as con:
-#         try:
-#             cur = con.cursor()
-#             fruit_name = request.form["fruit_name"]
-#             quantity = request.form["quantity"]
-#             price = request.form["price"]
-#             cur.execute(" update fruit set fruit_name = ?, quantity = ?, price =? where id = ?;", id, fruit_name,quantity,price)
-#             msg = "Item Updated"
-#         except:
-#             msg = "Item cannot be updated"
-#         finally:
-#             return render_template("update_record.html")
-
- 
 @app.route("/delete")  
 def delete():  
     return render_template("delete.html")  
