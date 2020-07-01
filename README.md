@@ -1,4 +1,7 @@
 ## flask-crud-swagger-api
+
+[![flask_restful_swagger-automation](https://github.com/rantav/flask-restful-swagger/workflows/flask_restful_swagger%20Python2.7/badge.svg)](https://github.com/rantav/flask-restful-swagger/actions)<br>
+[![flask_restful_swagger-automation](https://github.com/rantav/flask-restful-swagger/workflows/flask_restful_swagger%20Python3.7/badge.svg)](https://github.com/rantav/flask-restful-swagger/actions)<br>
 <b>A simple Flask RESTful Micro-service with Swagger UI: Template</b> <br>
 Didn't find any perfect repository or  resources to implement entire flask restful sqlite crud operation, hence made this. Hope this repository helps!
 Suggestions and Contributions are most welcome!
